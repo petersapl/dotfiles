@@ -20,6 +20,9 @@ namespace DotfilesWrapper
                         case "commands.yaml":
                             _taskQueue.Enqueue(new Command(arg));
                             break;
+                        case "choco.yaml":
+                            _taskQueue.Enqueue(new Choco(arg));
+                            break;
                         default:
                             _taskQueue.Enqueue(new Command(arg));
                             break;
