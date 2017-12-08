@@ -1,0 +1,11 @@
+image: Visual Studio 2017
+
+configuration:
+  - Release
+
+before_build:
+  nuget restore src\DotfilesWrapper\DotfilesWrapper -SolutionDirectory src\DotfilesWrapper
+
+build:
+  project: src\DotfilesWrapper\DotfilesWrapper.sln
+  verbosity: minimal
