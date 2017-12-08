@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace DotfilesWrapper
 {
@@ -13,14 +14,14 @@ namespace DotfilesWrapper
 
             foreach (var arg in args)
             {
-                if (Path.GetExtension(arg.ToLower()) == ".yaml")
+                if (Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
                 {
-                    switch (arg)
+                    switch (Path.GetFileNameWithoutExtension(arg))
                     {
-                        case "commands.yaml":
+                        case "commands":
                             _taskQueue.Enqueue(new Command(arg));
                             break;
-                        case "choco.yaml":
+                        case "choco":
                             _taskQueue.Enqueue(new Choco(arg));
                             break;
                         default:

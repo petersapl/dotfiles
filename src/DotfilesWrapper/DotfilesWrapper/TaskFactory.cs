@@ -37,29 +37,37 @@ namespace DotfilesWrapper
 
         private string FormatStd(string cmd, string std, string desc, STD_TYPE type)
         {
-            StringBuilder builder = new StringBuilder();
+            if (std != string.Empty)
+            {
+                StringBuilder builder = new StringBuilder();
           
-            void FillBuilder(string prefix, string head, string body)
+                void FillBuilder(string prefix, string head, string body)
+                {
+                    string actualHead = $"{prefix} \"{(string.IsNullOrEmpty(desc) ? head : desc)}\"";
+                    builder.AppendLine(actualHead);  
+                    builder.AppendLine(string.Concat(Enumerable.Repeat("=", actualHead.Length)));
+                    builder.AppendLine(std);
+                }
+
+                switch (type)
+                {
+                    case STD_TYPE.OUTPUT:
+                        FillBuilder("Output for", cmd, std);
+                        break;
+                    case STD_TYPE.ERROR:
+                        FillBuilder("Error for", cmd, std);
+                        break;
+                    default:
+                        break;
+                }
+
+                return builder.ToString();
+            }
+            else
             {
-                string actualHead = $"{prefix} \"{(string.IsNullOrEmpty(desc) ? head : desc)}\"";
-                builder.AppendLine(actualHead);  
-                builder.AppendLine(string.Concat(Enumerable.Repeat("=", actualHead.Length)));
-                builder.AppendLine(std);
+                return null;
             }
 
-            switch (type)
-            {
-                case STD_TYPE.OUTPUT:
-                    FillBuilder("Output for", cmd, std);
-                    break;
-                case STD_TYPE.ERROR:
-                    FillBuilder("Error for", cmd, std);
-                    break;
-                default:
-                    break;
-            }
-
-            return builder.ToString();
         }
         protected async Task<string> ExecCommand(string cmd, string desc = "", string path = "")
         {
@@ -76,17 +84,25 @@ namespace DotfilesWrapper
                     WorkingDirectory = path,
                 };
 
-                process.Start();
-
-                var output = await process.StandardOutput.ReadToEndAsync();
-                var error = await process.StandardError.ReadToEndAsync();
-
                 StringBuilder builder = new StringBuilder();
+                string error = string.Empty, output = string.Empty;
 
-                if (error != string.Empty)
-                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.ERROR));
-                else
-                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.OUTPUT));
+                try
+                {
+                    process.Start();
+
+                    output = await process.StandardOutput.ReadToEndAsync();
+                    error = await process.StandardError.ReadToEndAsync();
+                }
+                catch (Exception ex)
+                {
+                    error = ex.Message;
+                }
+
+               if (error != string.Empty) 
+                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.ERROR)); 
+                else 
+                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.OUTPUT)); 
 
                 return builder.ToString();
             }
