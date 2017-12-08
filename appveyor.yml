@@ -7,5 +7,14 @@ before_build:
   nuget restore src\DotfilesWrapper\DotfilesWrapper -SolutionDirectory src\DotfilesWrapper
 
 build:
+  parallel: true
   project: src\DotfilesWrapper\DotfilesWrapper.sln
-  verbosity: minimal
+  publish_nuget: true
+  verbosity: normal
+
+after_build:
+  7z a dotfiles.zip .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.exe .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.dll
+
+artifacts:
+  - path: dotfiles.zip
+    name: dotfiles
