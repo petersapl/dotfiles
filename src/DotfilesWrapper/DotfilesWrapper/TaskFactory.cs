@@ -35,7 +35,7 @@ namespace DotfilesWrapper
 
         protected bool Check<T>(int i, ConcurrentQueue<T> queue) => i < Environment.ProcessorCount && !queue.IsEmpty;
 
-        private string FormatStd(string cmd, string std, string desc, STD_TYPE type)
+        private Optional<string> FormatStd(string cmd, string std, string desc, STD_TYPE type)
         {
             if (std != string.Empty)
             {
@@ -61,13 +61,12 @@ namespace DotfilesWrapper
                         break;
                 }
 
-                return builder.ToString();
+                return Optional.Of(builder.ToString());
             }
             else
             {
-                return null;
+                return Optional.Empty<string>();
             }
-
         }
         protected async Task<string> ExecCommand(string cmd, string desc = "", string path = "")
         {
@@ -99,10 +98,10 @@ namespace DotfilesWrapper
                     error = ex.Message;
                 }
 
-               if (error != string.Empty) 
-                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.ERROR)); 
-                else 
-                    builder.Append(FormatStd(cmd, output, desc, STD_TYPE.OUTPUT)); 
+                FormatStd(cmd, error, desc, STD_TYPE.ERROR).IfPresent(err => builder.Append(err));
+
+                FormatStd(cmd, output, desc, STD_TYPE.OUTPUT).IfPresentOrElse(outp =>
+                    builder.Append(outp), () => builder.AppendLine($"no output for \"{cmd}\""));
 
                 return builder.ToString();
             }

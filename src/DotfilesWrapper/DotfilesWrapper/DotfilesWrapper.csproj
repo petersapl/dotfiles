@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Choco.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="Optional.cs" />
     <Compile Include="TaskFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
