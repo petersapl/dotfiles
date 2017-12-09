@@ -7,14 +7,13 @@ namespace DotfilesWrapper
 {
     class Program
     {
-        private static Queue<TaskFactory> _taskQueue;
         static void Main(string[] args)
         {
-            _taskQueue = new Queue<TaskFactory>();
+           var _taskQueue = new Queue<TaskFactory>();
 
             foreach (var arg in args)
             {
-                if (Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
+                if (File.Exists(arg) && Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
                 {
                     switch (Path.GetFileNameWithoutExtension(arg))
                     {
@@ -29,13 +28,25 @@ namespace DotfilesWrapper
                             break;
                     }
                 }
+                else
+                {
+                    Console.WriteLine($"Invalid File {arg}!");
+                }
             }
 
             void Dequeue()
             {
                 if (_taskQueue.Count > 0)
                 {
-                    _taskQueue.Dequeue().Exec();
+                    if (_taskQueue.Peek().Tasks > 0)
+                    {
+                        _taskQueue.Dequeue().Exec();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No value to process.");
+                        Console.WriteLine("Check if the commands in the respective files are valid!");
+                    }
                 }
             }
 

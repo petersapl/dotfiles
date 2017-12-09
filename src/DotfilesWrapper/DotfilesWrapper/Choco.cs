@@ -14,8 +14,12 @@ namespace DotfilesWrapper
         public Choco(string file)
         {
             var deserialize = Serial.Deserialize<ChocoWrapper>(file);
-            _chocoQueue = new ConcurrentQueue<string>(deserialize.ChocoCommands);
-            Tasks = deserialize.ChocoCommands.Count;
+
+            deserialize.IfPresent(val =>
+            {
+                _chocoQueue = new ConcurrentQueue<string>(val.ChocoCommands);
+                Tasks = val.ChocoCommands.Count;
+            });
         }
         public override void Exec()
         {

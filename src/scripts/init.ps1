@@ -17,8 +17,7 @@ Get-ChildItem -Path "..\templates" -Recurse | Copy-Item -Destination "C:\dotfile
 
 #install Chocolatey
 Write-Output "Installing Chocolatey..."
-Set-ExecutionPolicy Bypass -Scope Process -Force
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString(('https://chocolatey.org/install.ps1'))
 
 #start process
 Write-Output "Invoking DotfilesWrapper..."

@@ -31,9 +31,10 @@ namespace DotfilesWrapper
             });
         }
 
-        protected int Tasks { get; set; }
+        public int Tasks { get; set; }
 
-        protected bool Check<T>(int i, ConcurrentQueue<T> queue) => i < Environment.ProcessorCount && !queue.IsEmpty;
+        protected bool Check<T>(int i, ConcurrentQueue<T> queue) => 
+            i < Environment.ProcessorCount && (queue != null ? !queue.IsEmpty : false);
 
         private Optional<string> FormatStd(string cmd, string std, string desc, STD_TYPE type)
         {

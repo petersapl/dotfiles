@@ -13,8 +13,12 @@ namespace DotfilesWrapper
         public Command(string file)
         {
             var deserialize = Serial.Deserialize<CommandWrapper>(file);
-            _commandQueue = new ConcurrentQueue<CommandWrapper.CommandTuple>(deserialize.Commands);
-            Tasks = deserialize.Commands.Count;
+
+            deserialize.IfPresent(val =>
+            {
+                _commandQueue = new ConcurrentQueue<CommandWrapper.CommandTuple>(val.Commands);
+                Tasks = val.Commands.Count;
+            });
         }
 
         public override void Exec()
