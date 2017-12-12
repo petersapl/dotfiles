@@ -13,12 +13,12 @@ namespace DotfilesWrapper
 
         public Choco(string file)
         {
-            var deserialize = Serial.Deserialize<ChocoWrapper>(file);
+            var deserialize = Serial.Deserialize<ChocoWrapper, string>(file);
 
             deserialize.IfPresent(val =>
             {
-                _chocoQueue = new ConcurrentQueue<string>(val.ChocoCommands);
-                Tasks = val.ChocoCommands.Count;
+                _chocoQueue = new ConcurrentQueue<string>(val.Commands);
+                Tasks = val.Commands.Count;
             });
         }
         public override void Exec()
@@ -46,10 +46,10 @@ namespace DotfilesWrapper
             }
         }
 
-        internal class ChocoWrapper
+        internal class ChocoWrapper : ICommandable<string>
         {
             [YamlMember(Alias = "choco")]
-            public List<string> ChocoCommands { get; set; }
+            public List<string> Commands { get; set; }
         }
     }
 }

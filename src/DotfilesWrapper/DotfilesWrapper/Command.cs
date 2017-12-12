@@ -9,14 +9,14 @@ namespace DotfilesWrapper
 {
     class Command : TaskFactory
     {
-        private ConcurrentQueue<CommandWrapper.CommandTuple> _commandQueue;
+        private ConcurrentQueue<CommandTuple> _commandQueue;
         public Command(string file)
         {
-            var deserialize = Serial.Deserialize<CommandWrapper>(file);
+            var deserialize = Serial.Deserialize<CommandWrapper, CommandTuple>(file);
 
             deserialize.IfPresent(val =>
             {
-                _commandQueue = new ConcurrentQueue<CommandWrapper.CommandTuple>(val.Commands);
+                _commandQueue = new ConcurrentQueue<CommandTuple>(val.Commands);
                 Tasks = val.Commands.Count;
             });
         }
@@ -45,19 +45,18 @@ namespace DotfilesWrapper
                 });
             }
         }
-
-        internal class CommandWrapper
+        internal class CommandTuple
         {
-            internal class CommandTuple
-            {
-                [YamlMember(Alias = "cmd")]
-                public string[] Cmd { get; set; }
-                [YamlMember(Alias = "path")]
-                public string Path { get; set; }
-                [YamlMember(Alias = "desc")]
-                public string Desc { get; set; }
-            }
+            [YamlMember(Alias = "cmd")]
+            public string[] Cmd { get; set; }
+            [YamlMember(Alias = "path")]
+            public string Path { get; set; }
+            [YamlMember(Alias = "desc")]
+            public string Desc { get; set; }
+        }
 
+        internal class CommandWrapper : ICommandable<CommandTuple>
+        {
             [YamlMember(Alias = "commands")]
             public List<CommandTuple> Commands { get; set; }
         }

@@ -1,12 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Core;
-using System;
+
 namespace DotfilesWrapper
 {
     static class Serial
     {
-        public static Optional<T> Deserialize<T>(string file)
+        public static Optional<T> Deserialize<T, K>(string file) where T : ICommandable<K>
         {
             using (StringReader reader = new StringReader(File.ReadAllText(file)))
             {
@@ -14,7 +15,12 @@ namespace DotfilesWrapper
 
                 try
                 {
-                    return Optional.Of(deserializer.Deserialize<T>(reader));
+                    var deserialize = deserializer.Deserialize<T>(reader);
+
+                    if (((ICommandable<K>)(deserialize)).Commands != null)
+                        return Optional.Of(deserialize);
+                    else
+                        return Optional.Empty<T>();
                 }
                 catch (YamlException ex)
                 {
