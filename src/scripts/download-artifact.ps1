@@ -7,7 +7,7 @@ $headers = @{
 $accountName = 'DiXN'
 $projectSlug = 'dotfiles'
 
-$downloadLocation = 'C:\dotfiles'
+$downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 
 # get project with last build details
 $project = Invoke-RestMethod -Method Get -Uri "$apiUrl/projects/$accountName/$projectSlug" -Headers $headers
