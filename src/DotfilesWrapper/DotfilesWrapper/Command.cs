@@ -35,7 +35,7 @@ namespace DotfilesWrapper
                 Task.Run(async () =>
                 {
                     Interlocked.Increment(ref _currentProcesses);
-                    Console.WriteLine(await ExecCommand(string.Join(" && ", cmd.Cmd), cmd.Desc, cmd.Path));
+                    Console.WriteLine(await ExecCommand(string.Join(" && ", cmd.Cmd ?? (new[] { "" })), cmd.Desc, cmd.Path));
                     Interlocked.Increment(ref _status);
                     Console.WriteLine($"Task {_status} of {Tasks} finished. {Environment.NewLine}");
                 }).ContinueWith(x =>
