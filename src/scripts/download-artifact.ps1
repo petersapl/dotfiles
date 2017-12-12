@@ -1,11 +1,13 @@
-$apiUrl = 'https://ci.appveyor.com/api'
-$token = 'api-key'
+param([string]$apiKey)
+
+$apiUrl = "https://ci.appveyor.com/api"
+$token = $apiKey
 $headers = @{
   "Authorization" = "Bearer $token"
   "Content-type" = "application/json"
 }
-$accountName = 'DiXN'
-$projectSlug = 'dotfiles'
+$accountName = "DiXN"
+$projectSlug = "dotfiles"
 
 $downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 
