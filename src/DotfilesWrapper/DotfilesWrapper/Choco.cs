@@ -24,7 +24,7 @@ namespace DotfilesWrapper
         }
         public override void Exec()
         {
-            if(Environment.GetCommandLineArgs().Skip(1).Contains("-dsync"))
+            if(Environment.GetCommandLineArgs().Skip(1).Contains("-csync"))
             {
                 Task.Run(async () =>
                 {
