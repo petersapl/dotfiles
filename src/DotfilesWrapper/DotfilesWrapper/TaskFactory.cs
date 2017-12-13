@@ -90,6 +90,7 @@ namespace DotfilesWrapper
                 try
                 {
                     process.Start();
+                    Console.WriteLine($"Started task: \"{(!string.IsNullOrEmpty(desc) ? desc : cmd)}\"");
 
                     output = await process.StandardOutput.ReadToEndAsync();
                     error = await process.StandardError.ReadToEndAsync();

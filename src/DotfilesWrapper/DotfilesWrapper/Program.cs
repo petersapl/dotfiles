@@ -30,7 +30,10 @@ namespace DotfilesWrapper
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid File {arg}!");
+                    if (arg[0] != '-')
+                    {
+                        Console.WriteLine($"Invalid File {arg}!");
+                    }
                 }
             }
 
