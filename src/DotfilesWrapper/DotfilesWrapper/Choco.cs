@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
@@ -23,8 +24,23 @@ namespace DotfilesWrapper
         }
         public override void Exec()
         {
-            for (var i = 0; Check(i, _chocoQueue); i++)
-                ExecTask();
+            if(Environment.GetCommandLineArgs().Skip(1).Contains("-dsync"))
+            {
+                Task.Run(async () =>
+                {
+                    foreach (var task in _chocoQueue.Select(cmd => ExecCommand($"choco install {cmd} -y", cmd)))
+                    {
+                        Console.WriteLine(await task);
+                        Console.WriteLine($"Task {++_status} of {Tasks} finished. {Environment.NewLine}");
+                    }
+                });
+            }
+            else
+            {
+                for (var i = 0; Check(i, _chocoQueue); i++)
+                    ExecTask();
+            }
+
         }
 
         protected override void ExecTask()
@@ -32,6 +48,7 @@ namespace DotfilesWrapper
             if (Check(_currentProcesses, _chocoQueue))
             {
                 _chocoQueue.TryDequeue(out var cmd);
+
                 Task.Run(async () =>
                 {
                     Interlocked.Increment(ref _currentProcesses);
