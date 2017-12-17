@@ -14,6 +14,9 @@ namespace DotfilesWrapper
 
         public Choco(string file)
         {
+            CmdType = CMD_TYPE.CHOCO;
+            FileName = file;
+
             var deserialize = Serial.Deserialize<ChocoWrapper, string>(file);
 
             deserialize.IfPresent(val =>
@@ -24,43 +27,19 @@ namespace DotfilesWrapper
         }
         public override void Exec()
         {
-            if(Environment.GetCommandLineArgs().Skip(1).Contains("-csync"))
-            {
-                Task.Run(async () =>
-                {
-                    foreach (var task in _chocoQueue.Select(cmd => ExecCommand($"choco install {cmd} -y", cmd)))
-                    {
-                        Console.WriteLine(await task);
-                        Console.WriteLine($"Task {++_status} of {Tasks} finished. {Environment.NewLine}");
-                    }
-                });
-            }
-            else
-            {
-                for (var i = 0; Check(i, _chocoQueue); i++)
-                    ExecTask();
-            }
-
+            ExecTask();
         }
 
         protected override void ExecTask()
         {
-            if (Check(_currentProcesses, _chocoQueue))
+            Task.Run(async () =>
             {
-                _chocoQueue.TryDequeue(out var cmd);
-
-                Task.Run(async () =>
+                foreach (var task in _chocoQueue.Select(cmd => ExecCommand($"choco install {cmd} -y", cmd)))
                 {
-                    Interlocked.Increment(ref _currentProcesses);
-                    Console.WriteLine(await ExecCommand($"choco install {cmd} -y", cmd));
-                    Interlocked.Increment(ref _status);
-                    Console.WriteLine($"Task {_status} of {Tasks} finished. {Environment.NewLine}");
-                }).ContinueWith(x =>
-                {
-                    Interlocked.Decrement(ref _currentProcesses);
-                    ExecTask();
-                });
-            }
+                    Console.WriteLine(await task);
+                    Console.WriteLine($"Choco task {++_status} of {Tasks} finished. {Environment.NewLine}");
+                }
+            });
         }
 
         internal class ChocoWrapper : ICommandable<string>

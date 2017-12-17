@@ -17,7 +17,7 @@ namespace DotfilesWrapper
                 {
                     var deserialize = deserializer.Deserialize<T>(reader);
 
-                    if (((ICommandable<K>)(deserialize)).Commands != null)
+                    if (deserialize?.Commands != null)
                         return Optional.Of(deserialize);
                     else
                         return Optional.Empty<T>();

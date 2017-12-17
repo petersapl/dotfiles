@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace DotfilesWrapper
 {
@@ -9,55 +10,50 @@ namespace DotfilesWrapper
     {
         static void Main(string[] args)
         {
-           var _taskQueue = new Queue<TaskFactory>();
+           var _taskList = new List<TaskFactory>();
 
-            foreach (var arg in args)
+            foreach (var arg in args.Distinct())
             {
                 if (File.Exists(arg) && Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
                 {
                     switch (Path.GetFileNameWithoutExtension(arg))
                     {
+                        case var command when Regex.IsMatch(command, "^post[_\\-]?[Cc]ommand$"):
+                            _taskList.Add(new Command(arg));
+                            break;
+                        case var choco when Regex.IsMatch(choco, "^post[_\\-]?[Cc]hoco$"):
+                            _taskList.Add(new Command(arg));
+                            break;
                         case "commands":
-                            _taskQueue.Enqueue(new Command(arg));
+                            ExecTask(new Command(arg));
                             break;
                         case "choco":
-                            _taskQueue.Enqueue(new Choco(arg));
-                            break;
-                        default:
-                            _taskQueue.Enqueue(new Command(arg));
+                            ExecTask(new Choco(arg));
                             break;
                     }
+                }
+            }
+
+            void ExecTask(TaskFactory task)
+            {
+                if (task.Tasks > 0)
+                {
+                    task.Exec();
                 }
                 else
                 {
-                    if (arg[0] != '-')
-                    {
-                        Console.WriteLine($"Invalid File {arg}!");
-                    }
+                    Console.WriteLine($"\"{task.FileName}\" has no value to process.");
+                    Console.WriteLine($"Check if the commands in \"{task.FileName}\" are valid!");
                 }
             }
 
-            void Dequeue()
-            {
-                if (_taskQueue.Count > 0)
-                {
-                    if (_taskQueue.Peek().Tasks > 0)
-                    {
-                        _taskQueue.Dequeue().Exec();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No value to process.");
-                        Console.WriteLine("Check if the commands in the respective files are valid!");
-                    }
-                }
-            }
 
-            Dequeue();
-
-            TaskFactory.OnTasksFinished += sender =>
+            TaskFactory.OnTasksFinished += (sender, type) =>
             {
-                Dequeue();
+                var task = _taskList.Where(x => x.CmdType == type).FirstOrDefault();
+
+                if (task != null)
+                    ExecTask(task);
             };
 
             Console.ReadLine();

@@ -12,6 +12,9 @@ namespace DotfilesWrapper
         private ConcurrentQueue<CommandTuple> _commandQueue;
         public Command(string file)
         {
+            CmdType = CMD_TYPE.COMMAND;
+            FileName = file;
+
             var deserialize = Serial.Deserialize<CommandWrapper, CommandTuple>(file);
 
             deserialize.IfPresent(val =>
@@ -37,7 +40,7 @@ namespace DotfilesWrapper
                     Interlocked.Increment(ref _currentProcesses);
                     Console.WriteLine(await ExecCommand(string.Join(" && ", cmd.Cmd ?? (new[] { "" })), cmd.Desc, cmd.Path));
                     Interlocked.Increment(ref _status);
-                    Console.WriteLine($"Task {_status} of {Tasks} finished. {Environment.NewLine}");
+                    Console.WriteLine($"Command task {_status} of {Tasks} finished. {Environment.NewLine}");
                 }).ContinueWith(x =>
                 {
                     Interlocked.Decrement(ref _currentProcesses);

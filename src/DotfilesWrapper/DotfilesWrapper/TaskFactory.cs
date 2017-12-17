@@ -11,7 +11,7 @@ namespace DotfilesWrapper
     {
         protected int _currentProcesses = 0, _status = 0;
 
-        public delegate void TaksFinishedEventArgs(object sender);
+        public delegate void TaksFinishedEventArgs(object sender, CMD_TYPE cmdType);
         public static event TaksFinishedEventArgs OnTasksFinished;
 
         private enum STD_TYPE
@@ -20,6 +20,16 @@ namespace DotfilesWrapper
             ERROR
         }
 
+        public enum CMD_TYPE
+        {
+            COMMAND,
+            CHOCO
+        }
+
+        public CMD_TYPE CmdType { get; set; }
+
+        public string FileName { get; set; }
+
         protected TaskFactory()
         {
             Task.Run(async () =>
@@ -27,7 +37,7 @@ namespace DotfilesWrapper
                 while (Tasks == 0 || _status < Tasks)
                     await Task.Delay(50);
 
-                OnTasksFinished?.Invoke(this);
+                OnTasksFinished?.Invoke(this, CmdType);
             });
         }
 
