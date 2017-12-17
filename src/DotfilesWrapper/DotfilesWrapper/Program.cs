@@ -10,7 +10,7 @@ namespace DotfilesWrapper
     {
         static void Main(string[] args)
         {
-           var _taskList = new List<TaskFactory>();
+           var _taskList = new List<TaskBase>();
 
             foreach (var arg in args.Distinct())
             {
@@ -34,7 +34,7 @@ namespace DotfilesWrapper
                 }
             }
 
-            void ExecTask(TaskFactory task)
+            void ExecTask(TaskBase task)
             {
                 if (task.Tasks > 0)
                 {
@@ -48,7 +48,7 @@ namespace DotfilesWrapper
             }
 
 
-            TaskFactory.OnTasksFinished += (sender, type) =>
+            TaskBase.OnTasksFinished += (sender, type) =>
             {
                 var task = _taskList.Where(x => x.CmdType == type).FirstOrDefault();
 

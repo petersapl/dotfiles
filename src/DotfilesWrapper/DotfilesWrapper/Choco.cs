@@ -8,7 +8,7 @@ using YamlDotNet.Serialization;
 
 namespace DotfilesWrapper
 {
-    class Choco : TaskFactory
+    class Choco : TaskBase
     {
         private ConcurrentQueue<string> _chocoQueue;
 

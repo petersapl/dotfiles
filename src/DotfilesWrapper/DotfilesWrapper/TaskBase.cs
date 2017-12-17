@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DotfilesWrapper
 {
-    abstract class TaskFactory
+    abstract class TaskBase
     {
         protected int _currentProcesses = 0, _status = 0;
 
@@ -30,7 +30,7 @@ namespace DotfilesWrapper
 
         public string FileName { get; set; }
 
-        protected TaskFactory()
+        protected TaskBase()
         {
             Task.Run(async () =>
             {

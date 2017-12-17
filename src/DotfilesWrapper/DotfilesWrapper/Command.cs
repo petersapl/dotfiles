@@ -7,7 +7,7 @@ using YamlDotNet.Serialization;
 
 namespace DotfilesWrapper
 {
-    class Command : TaskFactory
+    class Command : TaskBase
     {
         private ConcurrentQueue<CommandTuple> _commandQueue;
         public Command(string file)
