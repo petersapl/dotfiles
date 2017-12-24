@@ -1,2 +1,25 @@
 ---
 choco:
+  - opera
+  - winrar
+  - conemu
+  - vlc
+  - telegram.install
+  - git
+  - make
+  - nodejs
+  - yarn
+  - procexp
+  - spotify
+  - discord
+  - gitkraken
+  - firefox
+  - redshift
+  - python
+  - mongodb
+  - robo3t
+  - miktex
+  - strawberryperl
+  - vcredist2015
+  - visualcppbuildtools
+  - jdk9 -params "source=false"

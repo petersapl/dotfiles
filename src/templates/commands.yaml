@@ -1,2 +1,12 @@
 ---
 commands:
+  - cmd:
+    - powershell -Command "Invoke-WebRequest https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe -OutFile rustup-init.exe"
+    - .\rustup-init.exe -yv --default-toolchain nightly --default-host x86_64-pc-windows-msvc
+  - cmd:
+    - powershell -Command "Invoke-WebRequest https://kjkpub.s3.amazonaws.com/sumatrapdf/rel/SumatraPDF-3.1.2-64-install.exe -OutFile SumatraPDF-3.1.2-64-install.exe"
+    - .\SumatraPDF-3.1.2-64-install.exe
+  - cmd:
+    - powershell -Command "Invoke-WebRequest http://softwaredownloads.corsair.com/Files/Corsair-Link/Corsair-LINK-Installer-v4.9.4.28.zip -OutFile Corsair-LINK-Installer-v4.9.4.28.zip"
+  - cmd:
+    - powershell -Command "Invoke-WebRequest http://softwaredownloads.corsair.com/Files/Gaming-Keyboards/K95-setup-091913.zip -OutFile K95-setup-091913.zip"
