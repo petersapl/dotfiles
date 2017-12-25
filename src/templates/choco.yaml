@@ -10,6 +10,7 @@ choco:
   - nodejs
   - yarn
   - procexp
+  - postman
   - spotify
   - discord
   - gitkraken

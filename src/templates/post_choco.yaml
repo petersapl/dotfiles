@@ -1,6 +1,7 @@
 ---
 choco:
   - logitechgaming
+  - msiafterburner
   - jdownloader
   - origin
   - geforce-game-ready-driver

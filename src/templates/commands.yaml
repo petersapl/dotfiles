@@ -3,14 +3,22 @@ commands:
   - cmd:
     - powershell -Command "Invoke-WebRequest https://static.rust-lang.org/rustup/dist/i686-pc-windows-gnu/rustup-init.exe -OutFile rustup-init.exe"
     - .\rustup-init.exe -yv --default-toolchain nightly --default-host x86_64-pc-windows-msvc
+    desc: install rustup
   - cmd:
     - powershell -Command "Invoke-WebRequest https://kjkpub.s3.amazonaws.com/sumatrapdf/rel/SumatraPDF-3.1.2-64-install.exe -OutFile SumatraPDF-3.1.2-64-install.exe"
     - .\SumatraPDF-3.1.2-64-install.exe
+    desc: install SumatraPDF
   - cmd:
     - powershell -Command "Invoke-WebRequest http://softwaredownloads.corsair.com/Files/Corsair-Link/Corsair-LINK-Installer-v4.9.4.28.zip -OutFile Corsair-LINK-Installer-v4.9.4.28.zip"
     - powershell -command "$downloadLocation = [System.IO.Path]::GetTempPath() + 'dotfiles'; mkdir -Force ($downloadLocation + '\Corsair-LINK-Installer-v4.9.4.28') | Out-Null; Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory($downloadLocation + '\Corsair-LINK-Installer-v4.9.4.28.zip', $downloadLocation + '\Corsair-LINK-Installer-v4.9.4.28')"
     - '".\Corsair-LINK-Installer-v4.9.4.28\Corsair LINK Installer v4.9.4.28.exe"'
+    desc: install Corsair LINK
   - cmd:
     - powershell -Command "Invoke-WebRequest http://softwaredownloads.corsair.com/Files/Gaming-Keyboards/K95-setup-091913.zip -OutFile K95-setup-091913.zip"
     - powershell -command "$downloadLocation = [System.IO.Path]::GetTempPath() + 'dotfiles'; mkdir -Force ($downloadLocation + '\K95-setup-091913') | Out-Null; Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory($downloadLocation + '\K95-setup-091913.zip', $downloadLocation + '\K95-setup-091913')"
     - '".\K95-setup-091913\K95 setup 1.0.0.7 070313.exe"'
+    desc: install K95 software
+  - cmd:
+    - powershell -Command "Invoke-WebRequest http://www.fraps.com/free/setup.exe -OutFile fraps_setup.exe"
+    - .\fraps_setup.exe
+    desc: install fraps
