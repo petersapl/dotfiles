@@ -15,8 +15,18 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 Remove-Item "$downloadLocation\dotfiles.zip"
 
-#copy YAML files
-Get-ChildItem -Path "..\templates" -Recurse | Copy-Item -Destination $downloadLocation
+#download YAML files
+Write-Output "Downloading YAML files..."
+(New-Object System.Net.WebClient).
+    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/choco.yaml") | Out-File "choco.yaml"
+
+(New-Object System.Net.WebClient).
+    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/commands.yaml") | Out-File "commands.yaml"
+
+#download scripts
+Write-Output "Downloading script files..."
+(New-Object System.Net.WebClient).
+    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/default-apps.ps1") | Out-File "default-apps.ps1"
 
 #install Chocolatey
 Write-Output "Installing Chocolatey..."
