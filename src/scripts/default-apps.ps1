@@ -29,7 +29,7 @@ ForEach($appId in
   "Microsoft.WindowsPhone"       # Windows Phone Companion
 ) {
   Get-AppxPackage "$appId" -AllUsers | Remove-AppxPackage
-  Get-AppXProvisionedPackage -Online | Where DisplayNam -like "$appId" | Remove-AppxProvisionedPackage -Online
+  Get-AppXProvisionedPackage -Online | Where-Object DisplayNam -like "$appId" | Remove-AppxProvisionedPackage -Online
 }
 
 # Uninstall Windows Media Player.
