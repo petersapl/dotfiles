@@ -24,4 +24,4 @@ commands:
     desc: install fraps
   - cmd:
     - powershell -command ".\default-apps.ps1"
-    desc: remove default apps
+    desc: configure default apps
