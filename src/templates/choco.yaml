@@ -23,7 +23,7 @@ choco:
   - visualcppbuildtools
   - docker-for-windows
   - docker
-  - jdk9 -params "source=false"
+  - jdk10 -params "source=false"
   - intellijidea-ultimate
   - visualstudio2017enterprise
   - cygwin
