@@ -25,10 +25,7 @@ namespace DotfilesWrapper
                 Tasks = val.Commands.Count;
             });
         }
-        public override void Exec()
-        {
-            ExecTask();
-        }
+        public override void Exec() => ExecTask();
 
         protected override void ExecTask()
         {

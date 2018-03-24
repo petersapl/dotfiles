@@ -1,5 +1,7 @@
 param([string]$apiKey)
 
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
 $downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 #create folder in TEMP path if not exists
 mkdir -Force $downloadLocation | Out-Null
@@ -17,16 +19,12 @@ Remove-Item "$downloadLocation\dotfiles.zip"
 
 #download YAML files
 Write-Output "Downloading YAML files..."
-(New-Object System.Net.WebClient).
-    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/choco.yaml") | Out-File "choco.yaml"
-
-(New-Object System.Net.WebClient).
-    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/commands.yaml") | Out-File "commands.yaml"
+Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/choco.yaml" | Out-File "choco.yaml"
+Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/commands.yaml" | Out-File "commands.yaml"
 
 #download scripts
 Write-Output "Downloading script files..."
-(New-Object System.Net.WebClient).
-    DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/default-apps.ps1") | Out-File "default-apps.ps1"
+Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/default-apps.ps1" | Out-File "default-apps.ps1"
 
 #install Chocolatey
 Write-Output "Installing Chocolatey..."
