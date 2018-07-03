@@ -1,0 +1,29 @@
+---
+choco:
+  - opera
+  - winrar
+  - cmder
+  - vlc
+  - telegram
+  - git
+  - make
+  - nodejs
+  - yarn
+  - postman
+  - spotify
+  - discord
+  - gitkraken
+  - firefox
+  - python
+  - mongodb
+  - robo3t
+  - sumatrapdf.install
+  - strawberryperl
+  - miktex
+  - vcredist2015
+  - visualcppbuildtools
+  - jdk10 -params "source=false"
+  - intellijidea-ultimate
+  - visualstudio2017enterprise
+  - cygwin
+  - cyg-get

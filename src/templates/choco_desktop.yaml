@@ -17,6 +17,7 @@ choco:
   - python
   - mongodb
   - robo3t
+  - sumatrapdf.install
   - strawberryperl
   - miktex
   - vcredist2015
