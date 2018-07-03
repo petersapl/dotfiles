@@ -13,7 +13,7 @@ build:
   verbosity: normal
 
 after_build:
-  7z a dotfiles.zip .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.exe .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.dll
+  7z a dotfiles.zip .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.exe .\src\DotfilesWrapper\DotfilesWrapper\bin\Release\*.dll .\src\templates\*.yaml
 
 artifacts:
   - path: dotfiles.zip
