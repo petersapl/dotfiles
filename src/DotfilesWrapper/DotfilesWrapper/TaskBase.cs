@@ -11,8 +11,8 @@ namespace DotfilesWrapper
     {
         protected int _currentProcesses = 0, _status = 0;
 
-        public delegate void TaksFinishedEventArgs(object sender, CMD_TYPE cmdType);
-        public static event TaksFinishedEventArgs OnTasksFinished;
+        public delegate void TaskFinishedEventArgs(object sender, CMD_TYPE cmdType);
+        public static event TaskFinishedEventArgs OnTasksFinished;
 
         private enum STD_TYPE
         {

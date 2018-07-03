@@ -10,20 +10,12 @@ namespace DotfilesWrapper
     {
         static void Main(string[] args)
         {
-           var _taskList = new List<TaskBase>();
-
             foreach (var arg in args.Distinct())
             {
                 if (File.Exists(arg) && Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
                 {
                     switch (Path.GetFileNameWithoutExtension(arg))
                     {
-                        case var command when Regex.IsMatch(command, "^post[_\\-]?[Cc]ommand$"):
-                            _taskList.Add(new Command(arg));
-                            break;
-                        case var choco when Regex.IsMatch(choco, "^post[_\\-]?[Cc]hoco$"):
-                            _taskList.Add(new Command(arg));
-                            break;
                         case "commands":
                             ExecTask(new Command(arg));
                             break;
@@ -46,15 +38,6 @@ namespace DotfilesWrapper
                     Console.WriteLine($"Check if the commands in \"{task.FileName}\" are valid!");
                 }
             }
-
-
-            TaskBase.OnTasksFinished += (sender, type) =>
-            {
-                var task = _taskList.Where(x => x.CmdType == type).FirstOrDefault();
-
-                if (task != null)
-                    ExecTask(task);
-            };
 
             Console.ReadLine();
         }
