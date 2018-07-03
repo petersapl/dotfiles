@@ -1,4 +1,4 @@
-param([string]$apiKey)
+param([string]$apiKey, [string]$platform)
 
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
@@ -28,6 +28,15 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies
 Write-Output "Installing Chocolatey..."
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 
-#start process
+if ($platform -eq 'notebook') {
+  Write-Output "Downloading YAML files..."
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File "choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "commands.yaml"
+} else {
+  Write-Output "Downloading YAML files..."
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/choco.yaml" | Out-File "choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "commands.yaml"
+}
+
 Write-Output "Invoking DotfilesWrapper..."
 Invoke-Expression "$downloadLocation\DotfilesWrapper.exe $downloadLocation\choco.yaml $downloadLocation\commands.yaml"
