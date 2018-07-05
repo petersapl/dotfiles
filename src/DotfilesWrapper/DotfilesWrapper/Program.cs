@@ -10,6 +10,8 @@ namespace DotfilesWrapper
     {
         static void Main(string[] args)
         {
+            var _taskList = new List<TaskBase>();
+
             foreach (var arg in args.Distinct())
             {
                 if (File.Exists(arg) && Regex.IsMatch(Path.GetExtension(arg.ToLower()) , "^.ya?ml$"))
@@ -20,10 +22,10 @@ namespace DotfilesWrapper
                             ExecTask(new Command(arg));
                             break;
                         case "choco":
-                            ExecTask(new Choco(arg));
+                            _taskList.Add(new Choco(arg));
                             break;
                         case "choco_dependency":
-                            ExecTask(new ChocoDependency(arg));
+                            _taskList.Add(new ChocoDependency(arg));
                             break;
                     }
                 }
@@ -41,6 +43,14 @@ namespace DotfilesWrapper
                     Console.WriteLine($"Check if the commands in \"{task.FileName}\" are valid!");
                 }
             }
+
+            TaskBase.OnTasksFinished += (sender, type) =>
+            {
+                var task = _taskList.Where(x => x.CmdType == type).FirstOrDefault();
+
+                if (task != null)
+                    ExecTask(task);
+            };
 
             Console.ReadLine();
         }
