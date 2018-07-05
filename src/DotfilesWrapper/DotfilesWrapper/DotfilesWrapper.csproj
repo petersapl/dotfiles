@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Choco.cs" />
+    <Compile Include="ChocoDependency.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="ICommandable.cs" />
     <Compile Include="Optional.cs" />

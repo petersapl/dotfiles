@@ -22,6 +22,9 @@ namespace DotfilesWrapper
                         case "choco":
                             ExecTask(new Choco(arg));
                             break;
+                        case "choco_dependency":
+                            ExecTask(new ChocoDependency(arg));
+                            break;
                     }
                 }
             }

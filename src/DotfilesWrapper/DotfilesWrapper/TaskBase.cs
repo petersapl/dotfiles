@@ -23,7 +23,8 @@ namespace DotfilesWrapper
         public enum CMD_TYPE
         {
             COMMAND,
-            CHOCO
+            CHOCO,
+            CHOCO_DEPENDENCY
         }
 
         public CMD_TYPE CmdType { get; set; }
