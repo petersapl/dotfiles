@@ -21,3 +21,7 @@ commands:
   - cmd:
     - powershell -command ".\default-apps.ps1"
     desc: configure default apps
+  - cmd:
+    - mkdir %USERPROFILE%\Documents\WindowsPowerShell 2> NUL
+    - xcopy /y Microsoft.PowerShell_profile.ps1 %USERPROFILE%\Documents\WindowsPowerShell
+    desc: copy powershell config
