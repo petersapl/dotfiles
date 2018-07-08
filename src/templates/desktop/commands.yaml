@@ -19,7 +19,7 @@ commands:
     - .\fraps_setup.exe
     desc: install fraps
   - cmd:
-    - powershell -command ".\default-apps.ps1"
+    - .\default-apps.ps1
     desc: configure default apps
   - cmd:
     - mkdir %USERPROFILE%\Documents\WindowsPowerShell 2> NUL
