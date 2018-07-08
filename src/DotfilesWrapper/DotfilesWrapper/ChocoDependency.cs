@@ -41,14 +41,14 @@ namespace DotfilesWrapper
 
         internal class ChocoDependencyTuple
         {
+            [YamlMember(Alias = "app")]
+            public string app { get; set; }
             [YamlMember(Alias = "cmd")]
             public string[] Cmd { get; set; }
             [YamlMember(Alias = "path")]
             public string Path { get; set; }
             [YamlMember(Alias = "desc")]
             public string Desc { get; set; }
-            [YamlMember(Alias = "app")]
-            public string app { get; set; }
         }
 
         internal class ChocoDependencyWrapper : ICommandable<ChocoDependencyTuple>
