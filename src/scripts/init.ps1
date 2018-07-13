@@ -1,7 +1,5 @@
 param([string]$apiKey, [string]$platform)
 
-Set-ExecutionPolicy Bypass -Scope Process -Force
-
 $downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 #create folder in TEMP path if not exists
 mkdir -Force $downloadLocation | Out-Null
