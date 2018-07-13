@@ -8,6 +8,7 @@ mkdir -Force $downloadLocation | Out-Null
 
 #download DotfilesWrapper
 Write-Output "Downloading DotfilesWrapper..."
+Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-artifact.ps1" | Out-File "download-artifact.ps1"
 Invoke-Expression ".\download-artifact.ps1 -apiKey $apiKey"
 
 #extract DotfilesWrapper
@@ -34,12 +35,12 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://cho
 
 if ($platform -eq 'notebook') {
   Write-Output "Downloading YAML files..."
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File "choco.yaml"
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "commands.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File -filepath "$downloadLocation\choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 } else {
   Write-Output "Downloading YAML files..."
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/choco.yaml" | Out-File "choco.yaml"
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "commands.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/choco.yaml" | Out-File "$downloadLocation\choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 }
 
 Write-Output "Invoking DotfilesWrapper..."
