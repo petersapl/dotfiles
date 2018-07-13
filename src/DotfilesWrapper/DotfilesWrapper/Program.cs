@@ -52,6 +52,7 @@ namespace DotfilesWrapper
                     ExecTask(task);
             };
 
+            ExecTask(_taskList.Where(x => x.CmdType == TaskBase.CMD_TYPE.CHOCO).FirstOrDefault());
             Console.ReadLine();
         }
     }

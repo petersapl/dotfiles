@@ -43,5 +43,8 @@ if ($platform -eq 'notebook') {
   Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 }
 
+Remove-Item download-artifact.ps1
+Set-Location $downloadLocation
+
 Write-Output "Invoking DotfilesWrapper..."
 Invoke-Expression "$downloadLocation\DotfilesWrapper.exe $downloadLocation\choco.yaml $downloadLocation\commands.yaml"
