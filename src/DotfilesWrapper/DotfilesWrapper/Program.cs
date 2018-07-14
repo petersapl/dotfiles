@@ -10,7 +10,7 @@ namespace DotfilesWrapper
     {
         static void Main(string[] args)
         {
-            var _taskList = new List<TaskBase>();
+            var _taskList = new Queue<TaskBase>();
 
             foreach (var arg in args.Distinct())
             {
@@ -22,10 +22,10 @@ namespace DotfilesWrapper
                             ExecTask(new Command(arg));
                             break;
                         case "choco":
-                            _taskList.Add(new Choco(arg));
+                            _taskList.Enqueue(new Choco(arg));
                             break;
                         case "choco_dependency":
-                            _taskList.Add(new ChocoDependency(arg));
+                            _taskList.Enqueue(new ChocoDependency(arg));
                             break;
                     }
                 }
@@ -46,13 +46,13 @@ namespace DotfilesWrapper
 
             TaskBase.OnTasksFinished += (sender, type) =>
             {
-                var task = _taskList.Where(x => x.CmdType == type).FirstOrDefault();
+                var task = _taskList.Dequeue();
 
                 if (task != null)
                     ExecTask(task);
             };
 
-            ExecTask(_taskList.Where(x => x.CmdType == TaskBase.CMD_TYPE.CHOCO).FirstOrDefault());
+            ExecTask(_taskList.Dequeue());
             Console.ReadLine();
         }
     }
