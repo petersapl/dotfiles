@@ -5,7 +5,7 @@ commands:
     - .\rustup-init.exe -yv --default-toolchain nightly --default-host x86_64-pc-windows-msvc
     desc: install rustup
   - cmd:
-    - powershell -noexit "& '.\default-apps.ps1'"
+    - Set-ExecutionPolicy Bypass -Scope Process -Force; powershell -noexit "& '.\default-apps.ps1'"
     desc: configure default apps
   - cmd:
     - mkdir %USERPROFILE%\Documents\WindowsPowerShell 2> NUL
