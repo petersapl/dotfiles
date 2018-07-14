@@ -37,6 +37,9 @@ if (-not(Test-Path -Path $registryKeyPath)) {
 New-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -PropertyType DWORD -Value 1
 New-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -PropertyType DWORD -Value 1
 
+#disable windows defender real time monitoring during installation
+Set-MpPreference -DisableRealtimeMonitoring $true
+
 #install Chocolatey
 Write-Output "Installing Chocolatey..."
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
