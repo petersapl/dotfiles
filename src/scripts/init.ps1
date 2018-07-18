@@ -1,4 +1,4 @@
-param([string]$apiKey, [string]$platform)
+param([string]$platform)
 
 $downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 #create folder in TEMP path if not exists
@@ -6,8 +6,7 @@ mkdir -Force $downloadLocation | Out-Null
 
 #download DotfilesWrapper
 Write-Output "Downloading DotfilesWrapper..."
-Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-artifact.ps1" | Out-File "download-artifact.ps1"
-Invoke-Expression ".\download-artifact.ps1 -apiKey $apiKey"
+Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-github-release.ps1"
 
 #extract DotfilesWrapper
 Write-Output "Extracting DotfilesWrapper..."

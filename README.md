@@ -2,5 +2,5 @@
 
 ```shell
 
-Set-ExecutionPolicy Bypass -Scope Process -Force; irm https://git.io/init.ps1 | Out-File "init.ps1"; .\init.ps1 -apiKey "api-key" -platform "desktop"
+Set-ExecutionPolicy Bypass -Scope Process -Force; irm https://git.io/init.ps1 | Out-File "init.ps1"; .\init.ps1 -platform "desktop"
 ```
