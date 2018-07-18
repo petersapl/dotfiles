@@ -6,7 +6,7 @@ mkdir -Force $downloadLocation | Out-Null
 
 #download DotfilesWrapper
 Write-Output "Downloading DotfilesWrapper..."
-Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-github-release.ps1"
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-github-release.ps1"))
 
 #extract DotfilesWrapper
 Write-Output "Extracting DotfilesWrapper..."
