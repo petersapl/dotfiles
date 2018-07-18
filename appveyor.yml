@@ -20,8 +20,8 @@ artifacts:
     name: dotfiles
 
 deploy:
-  release: dotfiles-v$(appveyor_build_version)
-  description: 'dotfiles release'
+  release: dotfiles-$(APPVEYOR_REPO_TAG_NAME)
+  description: 'dotfiles $(APPVEYOR_REPO_TAG_NAME) release.'
   provider: GitHub
   auth_token:
     secure: oi4DXySv0pePN3v3N6LG83wlrbAHRFulTec/9hJ5+GMtjbLwoxurPHagYEsS1lzD
