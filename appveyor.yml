@@ -18,3 +18,17 @@ after_build:
 artifacts:
   - path: dotfiles.zip
     name: dotfiles
+
+deploy:
+  release: dotfiles-v$(appveyor_build_version)
+  description: 'dotfiles release'
+  provider: GitHub
+  auth_token:
+    secure: oi4DXySv0pePN3v3N6LG83wlrbAHRFulTec/9hJ5+GMtjbLwoxurPHagYEsS1lzD
+  tag: $(APPVEYOR_REPO_TAG_NAME)
+  artifact: dotfiles.zip
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
