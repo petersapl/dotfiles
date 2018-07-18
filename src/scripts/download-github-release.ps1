@@ -3,5 +3,6 @@ $latestRelease = Invoke-WebRequest -Uri https://github.com/DiXN/dotfiles/release
 
 $json = $latestRelease.Content | ConvertFrom-Json
 $latestVersion = $json.tag_name
+$downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 
-Invoke-WebRequest -Uri "https://github.com/DiXN/dotfiles/releases//download/$($latestVersion)/dotfiles.zip" -UseBasicParsing -OutFile "dotfiles.zip"
+Invoke-WebRequest -Uri "https://github.com/DiXN/dotfiles/releases//download/$($latestVersion)/dotfiles.zip" -UseBasicParsing -OutFile "$downloadLocation\dotfiles.zip"
