@@ -1,4 +1,19 @@
-param([string]$platform)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+Function Detect-Notebook {
+  Param([string]$computer = "localhost")
+  $isNotebook = $false
+
+  if(Get-WmiObject -Class win32_systemenclosure -ComputerName $computer | Where-Object { $_.chassistypes -eq 9 -or $_.chassistypes -eq 10 -or $_.chassistypes -eq 14}) {
+    $isNotebook = $true
+  }
+
+  if(Get-WmiObject -Class win32_battery -ComputerName $computer) {
+    $isNotebook = $true
+  }
+
+  $isNotebook
+}
 
 $downloadLocation = [System.IO.Path]::GetTempPath() + "dotfiles"
 #create folder in TEMP path if not exists
@@ -43,7 +58,7 @@ Set-MpPreference -DisableRealtimeMonitoring $true
 Write-Output "Installing Chocolatey..."
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://chocolatey.org/install.ps1"))
 
-if ($platform -eq 'notebook') {
+if (Detect-Notebook) {
   Write-Output "Downloading YAML files..."
   Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File -filepath "$downloadLocation\choco.yaml"
   Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
@@ -53,7 +68,6 @@ if ($platform -eq 'notebook') {
   Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 }
 
-Remove-Item download-artifact.ps1
 Set-Location $downloadLocation
 
 Write-Output "Invoking DotfilesWrapper..."
