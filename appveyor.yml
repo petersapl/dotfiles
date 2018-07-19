@@ -1,3 +1,7 @@
+only_commits:
+  files:
+    - src\DotfilesWrapper\
+
 image: Visual Studio 2017
 
 configuration:
