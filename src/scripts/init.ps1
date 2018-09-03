@@ -41,6 +41,10 @@ Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "HideFileExt" -Value "0"
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name "Hidden" -Value "1"
 
+#exec powershell scripts on double click
+New-PSDrive -Name HKCR -PSProvider Registry -Root HKEY_CLASSES_ROOT
+Set-ItemProperty -Path "HKCR:\Microsoft.PowerShellScript.1\Shell\open\command" -Name "(Default)" -Value "'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe' -noLogo -ExecutionPolicy unrestricted -file '%1'"
+
 #enable developer mode
 $registryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
 
