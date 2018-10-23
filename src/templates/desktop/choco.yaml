@@ -1,8 +1,8 @@
 ---
 choco:
-  - opera
   - winrar
   - cmder
+  - vscode
   - vlc
   - telegram
   - make
@@ -10,28 +10,17 @@ choco:
   - yarn
   - postman
   - spotify
-  - discord
   - gitkraken
   - firefox
   - python
-  - mongodb
-  - robo3t
   - sumatrapdf.install
-  - strawberryperl
-  - miktex
   - vcredist2015
   - visualcppbuildtools
   - docker-for-windows
   - docker
-  - jdk10 -params "source=false"
-  - intellijidea-ultimate
   - visualstudio2017enterprise
-  - cygwin
-  - cyg-get
-  - logitechgaming
-  - msiafterburner
+  - nvm
   - jdownloader
-  - origin
-  - geforce-game-ready-driver
-  - fraps
-  - cue
+  - heidisql 
+  - bitnami-xampp
+  - itunes
