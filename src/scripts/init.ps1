@@ -21,7 +21,7 @@ mkdir -Force $downloadLocation | Out-Null
 
 #download DotfilesWrapper
 Write-Output "Downloading DotfilesWrapper..."
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/DiXN/dotfiles/master/src/scripts/download-github-release.ps1"))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://raw.githubusercontent.com/petersapl/dotfiles/master/src/scripts/download-github-release.ps1"))
 
 #extract DotfilesWrapper
 Write-Output "Extracting DotfilesWrapper..."
@@ -64,12 +64,12 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("https://cho
 
 if (Detect-Notebook) {
   Write-Output "Downloading YAML files..."
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File -filepath "$downloadLocation\choco.yaml"
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/petersapl/dotfiles/master/src/templates/notebook/choco.yaml" | Out-File -filepath "$downloadLocation\choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/petersapl/dotfiles/master/src/templates/notebook/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 } else {
   Write-Output "Downloading YAML files..."
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/choco.yaml" | Out-File "$downloadLocation\choco.yaml"
-  Invoke-RestMethod "https://raw.githubusercontent.com/DiXN/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/petersapl/dotfiles/master/src/templates/desktop/choco.yaml" | Out-File "$downloadLocation\choco.yaml"
+  Invoke-RestMethod "https://raw.githubusercontent.com/petersapl/dotfiles/master/src/templates/desktop/commands.yaml" | Out-File "$downloadLocation\commands.yaml"
 }
 
 Set-Location $downloadLocation
